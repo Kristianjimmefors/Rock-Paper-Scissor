@@ -11,19 +11,19 @@ var Game = createReactClass({
   },
 //sätter state till sten
 setRock: function() {
-  this.state.humanChoice = 'rock';
+  this.setState(this.humanChoice = 'rock');
   this.setState(this.state);
   this.aiChoice();
 },
 //sätter state till påse
 setPaper: function() {
-  this.state.humanChoice = 'paper';
+  this.setState(this.humanChoice = 'paper');
   this.setState(this.state);
   this.aiChoice();
 },
 //ätter state till sax
 setScissor: function() {
-  this.state.humanChoice = 'scissor';
+  this.setState(this.humanChoice = 'scissor');
   this.setState(this.state);
   this.aiChoice();
 },
