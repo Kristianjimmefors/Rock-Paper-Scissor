@@ -1,56 +1,63 @@
-var Game = createReactClass({
+var React = require('react');
+var ReactDOM = require('react-dom');
+
+
+class Game extends React.Component{
   //sätter mina state till någonting i början så att dem inte är undefined
-  getInitialState: function() {
-    return {
+  constructor(){
+    super();
+      this.state = {
       number: null,
       humanChoice: null,
       aiChoice: null,
       aiPoints: 0,
       humanPoints: 0,
     };
-  },
+    this.setRock = this.setRock.bind(this),
+    this.setPaper = this.setPaper.bind(this),
+    this.setScissor = this.setScissor.bind(this),
+    this.aiChoice = this.aiChoice.bind(this),
+    this.scoreCounter = this.scoreCounter.bind(this);
+  }
 //sätter state till sten
-setRock: function() {
-  this.setState(this.humanChoice = 'rock');
-  this.setState(this.state);
+setRock() {
+  this.setState({humanChoice: 'rock'});
   this.aiChoice();
-},
+}
 //sätter state till påse
-setPaper: function() {
-  this.setState(this.humanChoice = 'paper');
-  this.setState(this.state);
+setPaper() {
+  this.setState({humanChoice: 'paper'});
   this.aiChoice();
-},
+}
 //ätter state till sax
-setScissor: function() {
-  this.setState(this.humanChoice = 'scissor');
-  this.setState(this.state);
+setScissor() {
+  this.setState({humanChoice: 'scissor'});
   this.aiChoice();
-},
+}
 //dator väljer sten sax eller påse och nollställer sedan bilden och valen
-aiChoice: function(){
-  setTimeout( function() {
-    this.state.aiChoice = Math.floor(Math.random() * 3 + 1);
+aiChoice(){
+  setTimeout( () => {
+    this.setState({aiChoice: Math.floor(Math.random() * 3 + 1)});
     if (this.state.aiChoice < 2) {
-      this.state.aiChoice = 'rock';
+      this.setState({aiChoice: 'rock'});
     } else if (this.state.aiChoice <=2) {
-      this.state.aiChoice = 'scissor';
+      this.setState({aiChoice: 'scissor'});
     }else {
-      this.state.aiChoice = 'paper';
+      this.setState({aiChoice: 'paper'});
     }
     this.setState(this.state);
     this.scoreCounter();
-  }.bind(this), 1500);
+  }, 1500);
   //nollställer bilderna och valen
-  setTimeout(function() {
-    this.state.humanChoice = null;
+  setTimeout(() => {
+    this.setState({humanChoice: null});
     this.setState(this.state);
-    this.state.aiChoice = null;
+    this.setState({aiChoice: null});
     this.setState(this.state);
-  }.bind(this), 3000);
-},
+  }, 3000);
+}
 //kollar vem som vinner och räknar poäng
-scoreCounter: function() {
+scoreCounter() {
   //kollar vem som vinnar
   var b = this.state.humanChoice === null && this.state.aiChoice === null? '':
   (this.state.humanChoice === this.state.aiChoice? '':
@@ -63,14 +70,14 @@ scoreCounter: function() {
 )))))));
 //lägger till poång till den som vann
 if (b === true) {
-  this.state.humanPoints = this.state.humanPoints + 1;
+  this.setState({humanPoints: +1});
   this.setState(this.state);
 }else if (b ===false){
-  this.state.aiPoints = this.state.aiPoints + 1;
+  this.setState({aiPoints:  + 1});
   this.setState(this.state);
-}else{};
-},
-  render: function(){
+}else;
+}
+  render(){
     return <div>
       <input id="rock" type="button" value="rock" onClick={this.setRock}></input>
       <input id="paper" type="button" value="paper" onClick={this.setPaper}></input>
@@ -82,6 +89,6 @@ if (b === true) {
       <p>Computer points: {this.state.aiPoints}</p>
     </div>
   }
-});
+}
 
 ReactDOM.render(<Game></Game>, document.getElementById('app'));
