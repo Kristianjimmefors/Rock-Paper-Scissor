@@ -1,5 +1,5 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+const React = require('react');
+const ReactDOM = require('react-dom');
 
 
 class Game extends React.Component{
@@ -13,28 +13,23 @@ class Game extends React.Component{
       aiPoints: 0,
       humanPoints: 0,
     };
-    this.setRock = this.setRock.bind(this),
-    this.setPaper = this.setPaper.bind(this),
-    this.setScissor = this.setScissor.bind(this),
     this.aiChoice = this.aiChoice.bind(this),
     this.scoreCounter = this.scoreCounter.bind(this);
   }
-//sätter state till sten
-setRock() {
-  this.setState({humanChoice: 'rock'});
-  this.aiChoice();
-}
-//sätter state till påse
-setPaper() {
-  this.setState({humanChoice: 'paper'});
-  this.aiChoice();
-}
-//ätter state till sax
-setScissor() {
-  this.setState({humanChoice: 'scissor'});
-  this.aiChoice();
-}
-//dator väljer sten sax eller påse och nollställer sedan bilden och valen
+//sätter humanChoice till sten, sax eller påse
+  setHchoice($choice){
+    if($choice == 'rock'){
+      this.setState({humanChoice: 'rock'});
+      this.aiChoice();
+    } else if($choice == 'paper'){
+      this.setState({humanChoice: 'paper'});
+      this.aiChoice();
+    } else{
+      this.setState({humanChoice: 'scissor'});
+      this.aiChoice();
+    }
+  }
+//dator väljer sten, sax eller påse och nollställer sedan bilden och valen
 aiChoice(){
   setTimeout( () => {
     this.setState({aiChoice: Math.floor(Math.random() * 3 + 1)});
@@ -47,19 +42,17 @@ aiChoice(){
     }
     this.setState(this.state);
     this.scoreCounter();
-  }, 1500);
+  }, 1000);
   //nollställer bilderna och valen
   setTimeout(() => {
     this.setState({humanChoice: null});
-    this.setState(this.state);
     this.setState({aiChoice: null});
-    this.setState(this.state);
-  }, 3000);
+  }, 2000);
 }
 //kollar vem som vinner och räknar poäng
 scoreCounter() {
   //kollar vem som vinnar
-  var b = this.state.humanChoice === null && this.state.aiChoice === null? '':
+  let b = this.state.humanChoice === null && this.state.aiChoice === null? '':
   (this.state.humanChoice === this.state.aiChoice? '':
   (this.state.humanChoice === 'scissor' && this.state.aiChoice === 'rock'? false:
   (this.state.humanChoice === 'paper' && this.state.aiChoice === 'rock'? true:
@@ -68,25 +61,24 @@ scoreCounter() {
   (this.state.humanChoice === 'paper' && this.state.aiChoice === 'scissor'? false:
   (this.state.humanChoice === 'rock' && this.state.aiChoice === 'scissor'? true:''
 )))))));
-//lägger till poång till den som vann
+//lägger till poäng till den som vann
 if (b === true) {
-  this.setState({humanPoints: +1});
-  this.setState(this.state);
-}else if (b ===false){
-  this.setState({aiPoints:  + 1});
-  this.setState(this.state);
+  this.setState({humanPoints: this.state.humanPoints +1});
+}else if (b === false){
+  this.setState({aiPoints: this.state.aiPoints +1});
 }else;
 }
   render(){
     return <div>
-      <input id="rock" type="button" value="rock" onClick={this.setRock}></input>
-      <input id="paper" type="button" value="paper" onClick={this.setPaper}></input>
-      <input id="scissor" type="button" value="scissor" onClick={this.setScissor}></input>
-      <p>{}</p>
-      <img src={"img/" + this.state.humanChoice + ".jpg"}></img>
-      <img src={"img/" + this.state.aiChoice + ".jpg"}></img>
-      <p>Your points: {this.state.humanPoints}</p>
-      <p>Computer points: {this.state.aiPoints}</p>
+      <div id="imgContainer">
+        <img src={"img/" + this.state.humanChoice + ".jpg"}></img>
+        <img src={"img/" + this.state.aiChoice + ".jpg"}></img>
+      </div>
+      <button id="rock"  onClick={() => this.setHchoice('rock')}>Sten</button>
+      <button id="scissor"  onClick={() => this.setHchoice('scissor')}>Sax</button>
+      <button id="paper"  onClick={() => this.setHchoice('paper')}>Påse</button>
+      <p>Dina poäng: {this.state.humanPoints}</p>
+      <p>Datorns poäng: {this.state.aiPoints}</p>
     </div>
   }
 }
