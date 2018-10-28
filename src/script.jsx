@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 
 class Game extends React.Component {
-  //sätter mina state till någonting i början så att dem inte är undefined
+  //sets the states to somthing so it's not undefined
   constructor() {
     super();
     this.state = {
@@ -16,7 +16,7 @@ class Game extends React.Component {
     };
   }
 
-  //sätter humanChoice till sten, sax eller påse
+  //sets the human choice to rock, paper or scissor
   setHchoice($choice) {
     setTimeout(() => {
     if ($choice == 'rock') {
@@ -31,28 +31,28 @@ class Game extends React.Component {
   }, 1);
   }
   
-  //dator väljer sten, sax eller påse och nollställer sedan bilden och valen
+  //Computer chooses rock, paper or scissir. Resets the choises and the images
   aiChoice() {
     setTimeout(() => {
       this.setState({ aiChoice: Math.floor(Math.random() * 3 + 1) });
       if (this.state.aiChoice < 2) {
         this.setState({ aiChoice: 'rock' });
       } else if (this.state.aiChoice <= 2) {
-        this.setState({ aiChoice: 'scissor' });
-      } else {
         this.setState({ aiChoice: 'paper' });
+      } else {
+        this.setState({ aiChoice: 'scissor' });
       }
       this.setState(this.state);
       this.scoreCounter();
     }, 1000);
-    //nollställer bilderna och valen
+    //resets the images and the choices
     setTimeout(() => {
       this.setState({ humanChoice: null });
       this.setState({ aiChoice: null });
       this.activeImg();
     }, 2000);
   }
-  //sätter classanem till active eller notActive
+  //change classanem to active or notActive
   activeImg(){
     if (this.state.humanChoice == null) {
       this.setState( {classname: 'notActive'} )
@@ -61,9 +61,9 @@ class Game extends React.Component {
     }
   }
   
-  //kollar vem som vinner och räknar poäng
+  //check who wins and count score
   scoreCounter() {
-    //kollar vem som vinnar
+    //check to see who wins
     let b = this.state.humanChoice === null && this.state.aiChoice === null ? '' :
       (this.state.humanChoice === this.state.aiChoice ? '' :
         (this.state.humanChoice === 'scissor' && this.state.aiChoice === 'rock' ? false :
@@ -74,7 +74,7 @@ class Game extends React.Component {
                   (this.state.humanChoice === 'rock' && this.state.aiChoice === 'scissor' ? true : ''
                   )))))));
 
-    //lägger till poäng till den som vann
+    //add points to the one who won
     if (b === true) {
       this.setState({ humanPoints: this.state.humanPoints + 1 });
     } else if (b === false) {
