@@ -1,0 +1,44 @@
+html, body{
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+#app{
+  width: 50%;
+  height: 50%;
+  margin: auto;
+}
+div{
+  height: 70%;
+  width: 100%;
+}
+#imgContainer{
+  margin: 10%;
+  height: 50%;
+  width: 80%;
+}
+#imgContainer img{
+  width: 100px;
+  height: 100px;
+  margin-left: 25px;
+}
+.notActive{
+  display: none;
+}
+button{
+  background-color: rgb(25, 25, 187);
+  border-color: grey;
+  color: white;
+  text-transform: uppercase;
+  font-size: 1em;
+  margin-left: 1em;
+  padding: 0.5em 1em;
+}
+#btnContaier{
+  margin: 10%;
+  height: 50%;
+  width: 80%;
+}
+#btnContaier p{
+  margin-left: 1em;
+}
