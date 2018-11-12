@@ -12,13 +12,14 @@ class Game extends React.Component {
       aiChoice: null,
       aiPoints: 0,
       humanPoints: 0,
-      classname: 'notActive',
+      humanClass: 'notActive',
+      aiClass: 'notActive'
     };
   }
 
+  
   //sets the human choice to rock, paper or scissor
   setHchoice($choice) {
-    setTimeout(() => {
     if ($choice == 'rock') {
       this.setState({ humanChoice: 'rock' });
     } else if ($choice == 'paper') {
@@ -26,11 +27,10 @@ class Game extends React.Component {
     } else {
       this.setState({ humanChoice: 'scissor' });
     }
-    this.activeImg();
+    this.setState({ humanClass: 'active'})
     this.aiChoice();
-  }, 1);
   }
-  
+
   //Computer chooses rock, paper or scissir. Resets the choises and the images
   aiChoice() {
     setTimeout(() => {
@@ -42,25 +42,22 @@ class Game extends React.Component {
       } else {
         this.setState({ aiChoice: 'scissor' });
       }
+      this.setState({ aiClass: 'active' })
       this.setState(this.state);
       this.scoreCounter();
-    }, 1000);
+    }, 500);
     //resets the images and the choices
     setTimeout(() => {
       this.setState({ humanChoice: null });
       this.setState({ aiChoice: null });
-      this.activeImg();
-    }, 2000);
+      if (this.state.humanClass == 'active' && this.state.aiClass == 'active') {
+        this.setState({ aiClass: 'notActive' })
+        this.setState({ humanClass: 'notActive' })
+      }
+    }, 1500);
   }
-  //change classanem to active or notActive
-  activeImg(){
-    if (this.state.humanChoice == null) {
-      this.setState( {classname: 'notActive'} )
-    } else {
-      this.setState( {classname: 'active'} )
-    }
-  }
-  
+
+
   //check who wins and count score
   scoreCounter() {
     //check to see who wins
@@ -85,8 +82,8 @@ class Game extends React.Component {
   render() {
     return <div>
       <div id="imgContainer">
-        <img className={this.state.classname} src={"img/" + this.state.humanChoice + ".jpg"}></img>
-        <img className={this.state.classname} src={"img/" + this.state.aiChoice + ".jpg"}></img>
+        <img className={this.state.humanClass} src={"img/" + this.state.humanChoice + ".jpg"}></img>
+        <img className={this.state.aiClass} src={"img/" + this.state.aiChoice + ".jpg"}></img>
       </div>
       <div id="btnContaier">
         <button id="rock" onClick={() => this.setHchoice('rock')}>Sten</button>
