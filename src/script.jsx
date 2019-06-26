@@ -50,7 +50,7 @@ class Game extends React.Component {
     setTimeout(() => {
       this.setState({ humanChoice: null });
       this.setState({ aiChoice: null });
-      if (this.state.humanClass == 'active' && this.state.aiClass == 'active') {
+      if (this.state.humanClass == 'active' || this.state.aiClass == 'active') {
         this.setState({ aiClass: 'notActive' })
         this.setState({ humanClass: 'notActive' })
       }
@@ -79,11 +79,37 @@ class Game extends React.Component {
     } else;
   }
 
+  humanChoiceImage(){
+    switch (this.state.humanChoice) {
+      case "rock":
+        return "dist/img/rock.jpg";
+      case "paper":
+        return "dist/img/paper.jpg";
+      case "scissor":
+        return "dist/img/scissor.jpg";
+      default:
+        return "";
+    }
+  }
+
+  aiChoiceImage() {
+    switch (this.state.aiChoice) {
+      case "rock":
+        return "dist/img/rock.jpg";
+      case "paper":
+        return "dist/img/paper.jpg";
+      case "scissor":
+        return "dist/img/scissor.jpg";
+      default:
+        return "";
+    }
+  }
+
   render() {
     return <div>
       <div id="imgContainer">
-        <img className={this.state.humanClass} src={"img/" + this.state.humanChoice + ".jpg"}></img>
-        <img className={this.state.aiClass} src={"img/" + this.state.aiChoice + ".jpg"}></img>
+        <img className={this.state.humanClass} src={this.humanChoiceImage()}></img>
+        <img className={this.state.aiClass} src={this.aiChoiceImage()}></img>
       </div>
       <div id="btnContaier">
         <button id="rock" onClick={() => this.setHchoice('rock')}>Sten</button>
